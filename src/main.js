@@ -3,10 +3,10 @@ import { createPinia } from 'pinia';
 import { MotionPlugin } from '@vueuse/motion';
 import App from './App.vue';
 
-// BUG FIXED: Path router disesuaikan dengan folder "routers" milik Anda
+// Path presisi ke folder routers sesuai struktur direktori Anda
 import router from './routers/index.js';
 
-// BUG FIXED: Path style.css disesuaikan karena berada langsung di dalam folder src/
+// Impor gaya CSS utama Tailwind
 import './style.css'; 
 
 const app = createApp(App);
