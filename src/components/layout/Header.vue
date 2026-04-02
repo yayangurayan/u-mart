@@ -64,9 +64,9 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
-import { useAuthStore } from '../../stores/authStore';
-import { useOrderStore } from '../../stores/orderStore';
 import { useRouter } from 'vue-router';
+import { useAuthStore } from '../../stores/authStore.js';
+import { useOrderStore } from '../../stores/orderStore.js';
 
 const authStore = useAuthStore();
 const orderStore = useOrderStore();

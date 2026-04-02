@@ -1,5 +1,5 @@
 <template>
-  <div class="pb-20">
+  <div class="pb-20" v-motion :initial="{ opacity: 0 }" :enter="{ opacity: 1 }">
     <div v-if="!activeOrder" class="text-center py-32">
       <div class="w-24 h-24 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6">
         <i class="ph ph-video-camera text-4xl text-slate-300"></i>
@@ -19,7 +19,6 @@
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div class="lg:col-span-2 space-y-8">
-          <!-- Class Header & Progress -->
           <div class="bg-white rounded-3xl shadow-sm border-2 border-[#008542]/20 p-8 relative overflow-hidden">
             <div class="flex flex-col sm:flex-row justify-between items-start mb-8 gap-4">
               <div>
@@ -45,7 +44,6 @@
               <p class="text-sm text-slate-500 font-medium">1 dari {{ activeOrder.hours }} Jam Sesi Diselesaikan</p>
             </div>
 
-            <!-- Call to Action GMeet -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Button @click="openGMeet" customClass="py-4 text-lg bg-blue-600 hover:bg-blue-700 text-white border-none">
                 <i class="ph-fill ph-video-camera text-xl"></i> Join Google Meet
@@ -59,7 +57,6 @@
             </div>
           </div>
 
-          <!-- Silabus -->
           <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-8">
             <h4 class="font-bold text-xl mb-6 text-slate-800">Daftar Materi / Silabus</h4>
             <div class="space-y-4">
@@ -80,7 +77,6 @@
         </div>
 
         <div class="lg:col-span-1 space-y-6">
-          <!-- Calendar Sidebar -->
           <div class="bg-slate-900 text-white rounded-3xl p-6 shadow-lg">
             <h4 class="font-bold text-lg mb-6 flex items-center gap-2"><i class="ph-fill ph-calendar text-[#FDB913]"></i> Kalender Sesi</h4>
             <div class="grid grid-cols-7 gap-1 text-center text-xs font-medium text-slate-400 mb-2">
@@ -101,7 +97,7 @@
 
 <script setup>
 import { computed } from 'vue';
-import { useOrderStore } from '../stores/orderStore';
+import { useOrderStore } from '../stores/orderStore.js';
 import Button from '../components/common/Button.vue';
 
 const orderStore = useOrderStore();

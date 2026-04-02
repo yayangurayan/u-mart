@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { CURRENT_USER } from './dataStore';
+import { CURRENT_USER } from './dataStore.js';
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({

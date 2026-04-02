@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-3xl mx-auto pb-20" v-if="tutor">
+  <div class="max-w-3xl mx-auto pb-20" v-if="tutor" v-motion :initial="{ opacity: 0, y: 20 }" :enter="{ opacity: 1, y: 0 }">
     <div class="mb-8">
       <h2 class="text-3xl font-extrabold flex items-center gap-3 text-slate-800">
         <i class="ph-fill ph-shopping-cart text-[#008542]"></i> Checkout Layanan
@@ -8,7 +8,6 @@
     </div>
 
     <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden mb-8">
-      <!-- Detail Tutor -->
       <div class="bg-slate-50 p-6 md:p-8 border-b border-slate-200 flex gap-6 items-center">
         <img :src="tutor.image" :alt="tutor.name" class="w-20 h-20 rounded-2xl bg-white shadow-sm" />
         <div>
@@ -21,7 +20,6 @@
       </div>
 
       <div class="p-6 md:p-8 space-y-8">
-        <!-- Form Input -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label class="block text-sm font-bold text-slate-700 mb-2">Durasi Belajar (Jam)</label>
@@ -42,7 +40,6 @@
           <textarea v-model="notes" rows="3" placeholder="Contoh: Saya ingin fokus pada bab jurnal penyesuaian..." class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-[#008542] outline-none"></textarea>
         </div>
 
-        <!-- Add-ons -->
         <div>
           <label class="block text-sm font-bold text-slate-700 mb-3">Fitur Produk Tambahan (Add-ons)</label>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -95,8 +92,8 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { MOCK_TUTORS } from '../stores/dataStore';
-import { useOrderStore } from '../stores/orderStore';
+import { MOCK_TUTORS } from '../stores/dataStore.js';
+import { useOrderStore } from '../stores/orderStore.js';
 import Button from '../components/common/Button.vue';
 
 const route = useRoute();
@@ -111,7 +108,6 @@ const notes = ref('');
 const addonModul = ref(false);
 const addonWeekend = ref(false);
 
-// WDD Order Math Logic Computation
 const subtotal = computed(() => {
   const basePrice = tutor.value ? tutor.value.rate * hours.value : 0;
   const modulPrice = addonModul.value ? 25000 : 0;

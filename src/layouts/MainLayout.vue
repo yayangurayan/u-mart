@@ -18,7 +18,6 @@
 
     <!-- Main Content Area -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <!-- Vue Router Transition Setup -->
       <router-view v-slot="{ Component }">
         <transition name="fade" mode="out-in">
           <component :is="Component" />
@@ -39,6 +38,6 @@ const isMenuOpen = ref(false);
 </script>
 
 <style>
-.fade-enter-active, .fade-leave-active { transition: opacity 0.3s ease; }
-.fade-enter-from, .fade-leave-to { opacity: 0; }
+.fade-enter-active, .fade-leave-active { transition: opacity 0.2s ease; }
+.fade-enter-from, .fade-leave-to { opacity: 0; transform: translateY(10px); }
 </style>

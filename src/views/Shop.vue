@@ -1,7 +1,7 @@
 <template>
   <div class="pb-20">
     <!-- Header Search & Filter -->
-    <div class="bg-slate-900 text-white rounded-3xl p-8 mb-8">
+    <div class="bg-slate-900 text-white rounded-3xl p-8 mb-8" v-motion :initial="{ opacity: 0, y: -20 }" :enter="{ opacity: 1, y: 0 }">
       <h2 class="text-3xl font-bold mb-4">Eksplorasi Keahlian (Toko)</h2>
       <p class="text-slate-300 mb-8 max-w-2xl">Cari merchant/tutor berdasarkan kategori Soft Skill, Hard Skill, atau nama spesifik. Hanya skill tersertifikasi yang tampil di level menengah ke atas.</p>
       
@@ -29,7 +29,13 @@
 
     <!-- Tutors Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <div v-for="tutor in filteredTutors" :key="tutor.id" class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col h-full">
+      <div 
+        v-for="(tutor, index) in filteredTutors" :key="tutor.id" 
+        v-motion
+        :initial="{ opacity: 0, scale: 0.9 }"
+        :enter="{ opacity: 1, scale: 1, transition: { duration: 300, delay: index * 50 } }"
+        class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col h-full"
+      >
         <!-- Card Header -->
         <div class="h-28 bg-gradient-to-r from-[#008542]/10 to-[#00539C]/10 relative">
           <div class="absolute top-4 right-4 bg-white/80 backdrop-blur px-2 py-1 rounded-md text-xs font-bold text-slate-700 shadow-sm">
@@ -84,7 +90,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import Button from '../components/common/Button.vue';
-import { MOCK_TUTORS } from '../stores/dataStore';
+import { MOCK_TUTORS } from '../stores/dataStore.js';
 
 const filterType = ref('All');
 const filterOptions = ['All', 'Hard Skill', 'Soft Skill'];

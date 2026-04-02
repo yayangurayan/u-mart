@@ -1,24 +1,18 @@
-import { createApp } from 'vue'
-import { MotionPlugin } from '@vueuse/motion' // Import plugin
-import App from './App.vue'
-import './style.css'
-
-const app = createApp(App)
-
-app.use(MotionPlugin) // Gunakan plugin
-
-app.mount('#app')import { createApp } from 'vue';
+import { createApp } from 'vue';
 import { createPinia } from 'pinia';
+import { MotionPlugin } from '@vueuse/motion';
 import App from './App.vue';
-import index from './index.js';
 
-// Impor gaya CSS utama (Tailwind)
-import './assets/style.css'; 
+// BUG FIXED: Path router disesuaikan dengan folder "routers" milik Anda
+import router from './routers/index.js';
+
+// BUG FIXED: Path style.css disesuaikan karena berada langsung di dalam folder src/
+import './style.css'; 
 
 const app = createApp(App);
 
-// Penggunaan Pinia & Router Wajib untuk Production
 app.use(createPinia());
 app.use(router);
+app.use(MotionPlugin);
 
 app.mount('#app');

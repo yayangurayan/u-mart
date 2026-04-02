@@ -5,7 +5,7 @@
     </Button>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      <div class="lg:col-span-2 space-y-8">
+      <div class="lg:col-span-2 space-y-8" v-motion :initial="{ opacity: 0, x: -30 }" :enter="{ opacity: 1, x: 0 }">
         <!-- Header Profil -->
         <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 flex flex-col md:flex-row gap-8 items-center md:items-start relative overflow-hidden">
           <div class="absolute top-0 right-0 w-32 h-32 bg-[#FDB913]/10 rounded-bl-full -z-10"></div>
@@ -31,7 +31,7 @@
           </div>
         </div>
 
-        <!-- Deskripsi & Skill Validasi WDD -->
+        <!-- Deskripsi & Skill -->
         <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-8">
           <h2 class="text-xl font-bold mb-4 text-slate-800 flex items-center gap-2">
             <i class="ph ph-user text-2xl text-[#008542]"></i> Tentang Saya
@@ -53,7 +53,6 @@
                 </div>
               </div>
               
-              <!-- Logika Validasi BPUB sesuai WDD Bab 7.1 -->
               <div v-if="skill.type === 'Hard Skill' && (skill.level === 'Intermediate' || skill.level === 'Advanced')" class="flex items-center gap-2 text-xs font-bold text-[#008542] bg-green-50 px-3 py-1.5 rounded-lg border border-green-100">
                 <i class="ph-fill ph-check-circle"></i> Tersertifikasi BPUB
               </div>
@@ -65,7 +64,7 @@
       </div>
 
       <!-- Float Pemesanan -->
-      <div class="lg:col-span-1">
+      <div class="lg:col-span-1" v-motion :initial="{ opacity: 0, x: 30 }" :enter="{ opacity: 1, x: 0 }">
         <div class="bg-white rounded-3xl shadow-xl border border-slate-100 p-6 sticky top-24 border-t-4 border-t-[#008542]">
           <h3 class="font-bold text-xl mb-6">Mulai Belajar</h3>
           <div class="flex items-end gap-1 mb-6 pb-6 border-b border-slate-100">
@@ -92,7 +91,7 @@
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import Button from '../components/common/Button.vue';
-import { MOCK_TUTORS } from '../stores/dataStore';
+import { MOCK_TUTORS } from '../stores/dataStore.js';
 
 const route = useRoute();
 const tutor = computed(() => MOCK_TUTORS.find(t => t.id === parseInt(route.params.id)));

@@ -1,5 +1,5 @@
 <template>
-  <div class="pb-20">
+  <div class="pb-20" v-motion :initial="{ opacity: 0, y: -10 }" :enter="{ opacity: 1, y: 0 }">
     <div class="mb-8">
       <h2 class="text-3xl font-extrabold text-slate-800 mb-2">Profil & Pencapaian</h2>
       <p class="text-slate-500">Kelola informasi pribadi dan lihat lencana keahlian yang telah Anda pelajari.</p>
@@ -41,7 +41,6 @@
       </div>
 
       <div class="lg:col-span-2">
-        <!-- Achievement Badges -->
         <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 h-full">
           <h3 class="text-2xl font-bold text-slate-800 flex items-center gap-2 mb-8">
             <i class="ph-fill ph-medal text-3xl text-[#FDB913]"></i> Lencana Keahlian
@@ -73,7 +72,7 @@
 </template>
 
 <script setup>
-import { useAuthStore } from '../stores/authStore';
+import { useAuthStore } from '../stores/authStore.js';
 import Button from '../components/common/Button.vue';
 
 const authStore = useAuthStore();
