@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  darkMode: 'class', // Wajib untuk fitur Dark Mode
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{vue,js,ts,jsx,tsx}",
@@ -9,8 +9,8 @@ export default {
     extend: {
       colors: {
         unimed: {
-          green: '#128F9E', // Warna baru khas UNIMED sesuai instruksi
-          dark: '#0e6e7a',  // Warna gelap dari hijau UNIMED untuk efek hover
+          green: '#128F9E', // Warna khas UNIMED yang baru
+          dark: '#0C6B76',  // Warna hover (sedikit lebih gelap dari warna utama)
           yellow: '#FDB913',
           blue: '#00539C'
         }

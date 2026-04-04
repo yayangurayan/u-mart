@@ -10,34 +10,47 @@
         <p class="text-slate-500 dark:text-slate-400 mt-2 font-medium">{{ authStore.t('Selesaikan pembayaran untuk membuka akses Class Room.', 'Complete payment to unlock Class Room access.') }}</p>
       </div>
 
+      <div v-if="paymentSuccess" class="bg-green-50 dark:bg-green-900/30 border-l-4 border-unimed-green p-4 rounded-r-xl mb-8">
+        <div class="flex items-center gap-3">
+          <i class="ph-fill ph-check-circle text-2xl text-unimed-green"></i>
+          <div>
+            <h4 class="font-bold text-green-800 dark:text-green-400">{{ authStore.t('Pembayaran Berhasil!', 'Payment Successful!') }}</h4>
+            <p class="text-sm text-green-700 dark:text-green-500 font-medium">{{ authStore.t('Mengarahkan Anda ke Class Room dalam 2 detik...', 'Redirecting to Class Room in 2 seconds...') }}</p>
+          </div>
+        </div>
+      </div>
+
       <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden mb-8 transition-colors duration-300">
         
-        <!-- Tata Letak Mobile Diperbaiki: flex-col pada layar kecil -->
-        <div class="bg-slate-50 dark:bg-slate-700/50 p-6 md:p-8 border-b border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row gap-6 items-center sm:items-start text-center sm:text-left">
-          <img :src="tutor.image" :alt="tutor.name" class="w-20 h-20 rounded-2xl bg-white shadow-sm border-2 border-white dark:border-slate-600" />
-          <div class="flex-1">
-            <h3 class="font-bold text-xl text-slate-800 dark:text-white">{{ tutor.name }}</h3>
-            <p class="text-unimed-blue dark:text-blue-400 font-bold">{{ tutor.skills[0].name }}</p>
+        <!-- BUG FIXED: Mobile View Flex-col dengan ruang yang proporsional -->
+        <div class="bg-slate-50 dark:bg-slate-700/50 p-6 md:p-8 border-b border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row gap-6 items-center sm:items-start text-center sm:text-left w-full">
+          <img :src="tutor.image" :alt="tutor.name" class="w-20 h-20 rounded-2xl bg-white shadow-sm border-2 border-white dark:border-slate-600 shrink-0" />
+          <div class="flex-1 min-w-0">
+            <h3 class="font-bold text-xl text-slate-800 dark:text-white truncate">{{ tutor.name }}</h3>
+            <p class="text-unimed-blue dark:text-blue-400 font-bold truncate">{{ tutor.skills[0].name }}</p>
             <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 font-medium"><i class="ph-fill ph-map-pin text-red-500"></i> {{ authStore.t('Lokasi', 'Location') }}: {{ tutor.location }}</p>
           </div>
-          <span class="text-sm px-4 py-2 rounded-xl font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-unimed-green shadow-sm w-full sm:w-auto">
-            Rp {{ tutor.rate.toLocaleString() }}/jam
-          </span>
+          <div class="shrink-0 w-full sm:w-auto mt-2 sm:mt-0">
+            <span class="inline-block text-sm px-4 py-2 rounded-xl font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-unimed-green shadow-sm w-full sm:w-auto text-center">
+              Rp {{ tutor.rate.toLocaleString() }}/jam
+            </span>
+          </div>
         </div>
 
-        <div class="p-6 md:p-8 space-y-8">
+        <div class="p-6 md:p-8 space-y-8 w-full">
+          
           <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4 text-blue-800 dark:text-blue-200 text-sm font-medium flex gap-3 items-start">
             <i class="ph-fill ph-info text-xl shrink-0"></i>
             <p><strong>{{ authStore.t('Informasi Paket:', 'Package Info:') }}</strong> {{ authStore.t('Paket belajar ini berlaku selama 30 Hari sejak dibeli. Durasi untuk setiap kali pertemuan/sesi adalah 1 hingga 3 jam sesuai kesepakatan jadwal.', 'This study package is valid for 30 Days after purchase. Session duration is 1-3 hours per meeting.') }}</p>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
             <div class="w-full">
               <label class="block text-sm font-extrabold text-slate-700 dark:text-slate-300 mb-2">{{ authStore.t('Total Akumulasi Jam', 'Total Accumulation Hours') }}</label>
               <div class="flex items-center justify-between gap-4 bg-slate-50 dark:bg-slate-700 p-2 rounded-xl border border-slate-200 dark:border-slate-600 w-full">
-                <button @click="hours = Math.max(1, hours - 1)" class="w-10 h-10 bg-white dark:bg-slate-600 rounded-lg border border-slate-200 dark:border-slate-500 hover:bg-slate-100 dark:hover:bg-slate-500 font-extrabold text-lg dark:text-white">-</button>
+                <button @click="hours = Math.max(1, hours - 1)" class="w-10 h-10 bg-white dark:bg-slate-600 rounded-lg border border-slate-200 dark:border-slate-500 hover:bg-slate-100 dark:hover:bg-slate-500 font-extrabold text-lg dark:text-white transition-colors">-</button>
                 <span class="flex-1 text-center font-extrabold text-lg text-unimed-green">{{ hours }} {{ authStore.t('Jam', 'Hours') }}</span>
-                <button @click="hours = Math.min(20, hours + 1)" class="w-10 h-10 bg-white dark:bg-slate-600 rounded-lg border border-slate-200 dark:border-slate-500 hover:bg-slate-100 dark:hover:bg-slate-500 font-extrabold text-lg dark:text-white">+</button>
+                <button @click="hours = Math.min(20, hours + 1)" class="w-10 h-10 bg-white dark:bg-slate-600 rounded-lg border border-slate-200 dark:border-slate-500 hover:bg-slate-100 dark:hover:bg-slate-500 font-extrabold text-lg dark:text-white transition-colors">+</button>
               </div>
             </div>
             <div class="w-full">
@@ -65,20 +78,19 @@
         </div>
       </div>
 
-      <div class="bg-slate-900 text-white rounded-3xl p-6 md:p-8 shadow-xl relative overflow-hidden">
-        <div class="relative z-10">
-          <h3 class="font-bold text-xl mb-6 flex items-center gap-2"><i class="ph-fill ph-receipt text-unimed-yellow"></i> {{ authStore.t('Rincian Tagihan', 'Billing Details') }}</h3>
+      <div class="bg-slate-900 dark:bg-slate-950 text-white rounded-3xl p-6 md:p-8 shadow-xl relative overflow-hidden w-full">
+        <div class="relative z-10 w-full">
+          <h3 class="font-bold text-xl mb-6 flex items-center gap-2"><i class="ph-fill ph-receipt text-[#FDB913]"></i> {{ authStore.t('Rincian Tagihan', 'Billing Details') }}</h3>
           <div class="space-y-4 mb-6 text-slate-300 font-medium w-full">
             <div class="flex justify-between w-full"><span>{{ authStore.t('Tarif Tutor', 'Tutor Rate') }} ({{ hours }} Jam)</span><span>Rp {{ (tutor.rate * hours).toLocaleString('id-ID') }}</span></div>
             <div class="flex justify-between w-full border-t border-slate-700 pt-4 text-white"><span>Subtotal</span><span class="font-bold">Rp {{ subtotal.toLocaleString('id-ID') }}</span></div>
             <div class="flex justify-between w-full text-sm text-slate-400"><span>Management Fee BPUB (5%)</span><span>Rp {{ bpubFee.toLocaleString('id-ID') }}</span></div>
           </div>
 
-          <!-- Perbaikan Layout Total Pembayaran & Tombol di Mobile -->
           <div class="flex flex-col md:flex-row justify-between md:items-center border-t-2 border-slate-700 pt-6 gap-6 w-full">
             <div class="w-full md:w-auto text-center md:text-left">
               <p class="text-slate-400 text-sm mb-2 font-bold">{{ authStore.t('Total Keseluruhan', 'Grand Total') }}</p>
-              <span class="font-extrabold text-2xl md:text-3xl text-unimed-green bg-white px-4 py-2 rounded-xl border-2 border-slate-200 shadow-sm block md:inline-block w-full md:w-auto">Rp {{ grandTotal.toLocaleString('id-ID') }}</span>
+              <span class="font-extrabold text-2xl md:text-3xl text-unimed-green bg-white dark:bg-slate-800 px-4 py-2 rounded-xl border-2 border-slate-200 dark:border-slate-700 shadow-sm block md:inline-block w-full md:w-auto">Rp {{ grandTotal.toLocaleString('id-ID') }}</span>
             </div>
             <Button @click="handlePayment" :disabled="paymentSuccess" customClass="w-full md:w-auto px-10 py-4 text-lg">
               {{ paymentSuccess ? authStore.t('Memproses...', 'Processing...') : authStore.t('Bayar Sekarang', 'Pay Now') }}

@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-16 md:space-y-24 pb-20">
     <div class="relative bg-unimed-green rounded-3xl overflow-hidden shadow-2xl animate-in fade-in">
-      <div class="absolute inset-0 bg-[url('https://api.dicebear.com/7.x/shapes/svg?seed=pattern&backgroundColor=0e6e7a')] opacity-20"></div>
+      <div class="absolute inset-0 bg-[url('https://api.dicebear.com/7.x/shapes/svg?seed=pattern&backgroundColor=0C6B76')] opacity-20"></div>
       <div class="relative p-6 md:p-16 flex flex-col lg:flex-row items-center gap-8 md:gap-12">
         <div class="flex-1 text-white z-10 text-center lg:text-left">
           <span class="inline-block text-xs px-3 py-1.5 rounded-full font-bold border bg-white/20 text-white border-white/30 mb-6 backdrop-blur-sm">{{ authStore.t('Platform Layanan Jasa Tutor Mahasiswa', 'Student Tutor Service Platform') }}</span>
@@ -42,6 +42,24 @@
       </div>
     </div>
 
+    <!-- BUG FIXED: Mengembalikan Section Layanan & Keunggulan Kami Di Atas Profil Tim -->
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-2xl md:text-3xl font-bold text-slate-800 dark:text-white mb-4">{{ authStore.t('Layanan & Keunggulan Kami', 'Our Services & Advantages') }}</h2>
+        <p class="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto text-base md:text-lg">{{ authStore.t('Ekosistem terintegrasi yang menjamin kualitas pembelajaran dan keamanan transaksi Anda.', 'An integrated ecosystem that guarantees the quality of learning and the security of your transactions.') }}</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+        <div v-for="(item, index) in features" :key="index" class="group bg-white dark:bg-slate-800 p-6 md:p-8 rounded-2xl border-2 border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer" :class="item.hover">
+          <div :class="`w-14 h-14 md:w-16 md:h-16 ${item.bg} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`">
+            <i :class="`ph ${item.icon} text-3xl ${item.color}`"></i>
+          </div>
+          <h3 class="text-lg md:text-xl font-bold text-slate-800 dark:text-white mb-3">{{ item.title }}</h3>
+          <p class="text-sm md:text-base text-slate-600 dark:text-slate-400 leading-relaxed">{{ item.desc }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Profil Pengembang -->
     <div class="bg-slate-50 dark:bg-slate-800 py-16 px-4 rounded-3xl border border-slate-200 dark:border-slate-700 transition-colors duration-300">
       <div class="text-center mb-12">
         <h2 class="text-3xl font-bold text-slate-800 dark:text-white mb-4">{{ authStore.t('Pengembang U-Mart', 'U-Mart Developers') }}</h2>
@@ -75,4 +93,11 @@ const searchNearby = () => {
   alert(authStore.t("Meminta akses lokasi GPS...", "Requesting GPS access..."));
   router.push({ path: '/shop', query: { sort: 'distance' } });
 };
+
+// Data fitur Layanan dan Keunggulan yang sebelumnya menghilang
+const features = ref([
+  { icon: 'ph-shield-check', title: authStore.t("Tutor Tersertifikasi", "Certified Tutors"), desc: authStore.t("Skill divalidasi BPUB UNIMED.", "Skills validated by BPUB UNIMED."), color: "text-unimed-green", bg: "bg-green-50 dark:bg-green-900/20", hover: "hover:border-unimed-green" },
+  { icon: 'ph-clock', title: authStore.t("Jadwal Fleksibel", "Flexible Schedule"), desc: authStore.t("Atur jadwal langsung dengan Class Room digital.", "Manage schedules directly with digital Class Room."), color: "text-[#FDB913]", bg: "bg-yellow-50 dark:bg-yellow-900/20", hover: "hover:border-[#FDB913]" },
+  { icon: 'ph-book-open', title: authStore.t("Modul Premium", "Premium Modules"), desc: authStore.t("Akses dan unduh materi khusus untuk Anda.", "Access and download specific materials for you."), color: "text-[#00539C]", bg: "bg-blue-50 dark:bg-blue-900/20", hover: "hover:border-[#00539C]" }
+]);
 </script>

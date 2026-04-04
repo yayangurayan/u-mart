@@ -9,7 +9,6 @@ export const useAuthStore = defineStore('auth', {
     language: 'id'
   }),
   getters: {
-    // Fitur Penterjemah Pintar untuk seluruh aplikasi
     t: (state) => {
       return (idText, enText) => {
         return state.language === 'id' ? idText : enText;
@@ -22,9 +21,13 @@ export const useAuthStore = defineStore('auth', {
       this.user = null;
       alert(this.t("Logout berhasil!", "Logout successful!"));
     },
+    // Fungsi ini dipanggil dari Settings.vue
     toggleTheme() {
       this.theme = this.theme === 'light' ? 'dark' : 'light';
-      // Logika inti untuk memicu Tailwind Dark Mode
+      this.applyTheme();
+    },
+    // Fungsi khusus untuk sinkronisasi DOM (Dipanggil di MainLayout)
+    applyTheme() {
       const htmlEl = document.documentElement;
       if (this.theme === 'dark') {
         htmlEl.classList.add('dark');
