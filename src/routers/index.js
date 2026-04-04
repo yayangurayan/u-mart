@@ -1,3 +1,4 @@
+// BUG FIXED: Menggunakan Static Import untuk mencegah Blank Screen pada Vite
 import { createRouter, createWebHistory } from 'vue-router';
 import MainLayout from '../layouts/MainLayout.vue';
 import Landing from '../views/Landing.vue';
@@ -26,6 +27,7 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
   scrollBehavior() {
+    // Selalu scroll ke atas saat pindah halaman
     return { top: 0, behavior: 'smooth' };
   }
 });

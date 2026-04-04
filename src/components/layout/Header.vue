@@ -9,18 +9,35 @@
         </router-link>
         
         <!-- Navigation Right -->
-        <div class="flex items-center gap-2 sm:gap-6">
-          <button class="p-2 text-slate-400 hover:text-[#008542] transition-colors relative">
+        <div class="flex items-center gap-1 sm:gap-4">
+          
+          <!-- TOMBOL HOME DITAMBAHKAN DI SINI SESUAI PERMINTAAN -->
+          <router-link 
+            to="/" 
+            class="flex items-center gap-2 p-2 sm:px-4 sm:py-2 text-slate-500 hover:text-[#008542] hover:bg-green-50 rounded-xl transition-colors"
+            active-class="text-[#008542] bg-green-50 font-bold"
+            title="Beranda Utama"
+          >
+            <i class="ph ph-house text-2xl"></i>
+            <span class="hidden lg:block font-medium text-sm">Beranda</span>
+          </router-link>
+
+          <button class="p-2 text-slate-400 hover:text-[#008542] transition-colors relative" title="Notifikasi">
             <i class="ph ph-bell text-2xl"></i>
             <span class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 border-2 border-white rounded-full"></span>
           </button>
           
-          <router-link to="/classroom" class="p-2 text-slate-400 hover:text-[#008542] transition-colors relative hidden sm:block">
+          <router-link 
+            to="/classroom" 
+            class="p-2 text-slate-400 hover:text-[#008542] transition-colors relative hidden sm:block" 
+            title="Keranjang / Class Room Aktif"
+            active-class="text-[#008542]"
+          >
             <i class="ph ph-shopping-cart text-2xl"></i>
             <span v-if="orderStore.activeOrder" class="absolute top-0 right-0 w-4 h-4 bg-[#FDB913] text-[10px] font-bold text-slate-900 flex items-center justify-center rounded-full shadow-sm">1</span>
           </router-link>
 
-          <div class="h-8 w-px bg-slate-200 hidden sm:block mx-2"></div>
+          <div class="h-8 w-px bg-slate-200 hidden sm:block mx-1"></div>
 
           <!-- User Dropdown -->
           <div class="relative" ref="dropdownRef">
@@ -30,8 +47,8 @@
               <i class="ph ph-caret-down text-slate-400 transition-transform" :class="{ 'rotate-180': isUserMenuOpen }"></i>
             </button>
 
-            <!-- Menu Item -->
-            <div v-if="isUserMenuOpen" class="absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 py-2">
+            <!-- Dropdown Menu Item -->
+            <div v-if="isUserMenuOpen" class="absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 origin-top-right transition-all">
               <div class="px-4 py-3 border-b border-slate-50 mb-2">
                 <p class="text-sm font-bold text-slate-800">{{ authStore.user?.name }}</p>
                 <p class="text-xs text-slate-500 truncate">{{ authStore.user?.email }}</p>
@@ -64,9 +81,9 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
-import { useRouter } from 'vue-router';
 import { useAuthStore } from '../../stores/authStore.js';
 import { useOrderStore } from '../../stores/orderStore.js';
+import { useRouter } from 'vue-router';
 
 const authStore = useAuthStore();
 const orderStore = useOrderStore();

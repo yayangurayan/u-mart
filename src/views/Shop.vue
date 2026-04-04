@@ -1,11 +1,11 @@
 <template>
   <div class="pb-20">
     <!-- Header Search & Filter -->
-    <div class="bg-slate-900 text-white rounded-3xl p-8 mb-8" v-motion :initial="{ opacity: 0, y: -20 }" :enter="{ opacity: 1, y: 0 }">
+    <div class="bg-slate-900 text-white rounded-3xl p-8 mb-8">
       <h2 class="text-3xl font-bold mb-4">Eksplorasi Keahlian (Toko)</h2>
-      <p class="text-slate-300 mb-8 max-w-2xl">Cari merchant/tutor berdasarkan kategori Soft Skill, Hard Skill, atau nama spesifik. Hanya skill tersertifikasi yang tampil di level menengah ke atas.</p>
+      <p class="text-slate-300 mb-8 max-w-2xl">Cari merchant/tutor berdasarkan kategori Soft Skill, Hard Skill, atau nama spesifik.</p>
       
-      <div class="flex flex-col md:flex-row gap-4">
+      <div class="flex flex-col md:flex-row gap-4 mb-4">
         <div class="relative flex-1">
           <i class="ph ph-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl"></i>
           <input 
@@ -15,28 +15,32 @@
             v-model="searchTerm"
           />
         </div>
-        <div class="flex gap-2 bg-white/10 p-1.5 rounded-xl backdrop-blur-md overflow-x-auto">
-          <button 
-            v-for="type in filterOptions" :key="type"
-            @click="filterType = type"
-            :class="['px-6 py-2.5 rounded-lg whitespace-nowrap font-medium transition-colors', filterType === type ? 'bg-[#FDB913] text-slate-900' : 'text-white hover:bg-white/20']"
-          >
-            {{ type }}
-          </button>
-        </div>
+        
+        <!-- Fitur Sorting -->
+        <select v-model="sortBy" class="bg-white/10 text-white border border-white/20 px-4 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FDB913]">
+          <option value="rating" class="text-slate-900">Rating Tertinggi</option>
+          <option value="price_asc" class="text-slate-900">Harga Terendah</option>
+          <option value="price_desc" class="text-slate-900">Harga Tertinggi</option>
+        </select>
+      </div>
+
+      <div class="flex gap-2 bg-white/10 p-1.5 rounded-xl backdrop-blur-md overflow-x-auto w-fit">
+        <button 
+          v-for="type in filterOptions" :key="type"
+          @click="filterType = type"
+          :class="['px-6 py-2.5 rounded-lg whitespace-nowrap font-medium transition-colors', filterType === type ? 'bg-[#FDB913] text-slate-900' : 'text-white hover:bg-white/20']"
+        >
+          {{ type }}
+        </button>
       </div>
     </div>
 
     <!-- Tutors Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div v-if="filteredTutors.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       <div 
-        v-for="(tutor, index) in filteredTutors" :key="tutor.id" 
-        v-motion
-        :initial="{ opacity: 0, scale: 0.9 }"
-        :enter="{ opacity: 1, scale: 1, transition: { duration: 300, delay: index * 50 } }"
+        v-for="tutor in filteredTutors" :key="tutor.id" 
         class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col h-full"
       >
-        <!-- Card Header -->
         <div class="h-28 bg-gradient-to-r from-[#008542]/10 to-[#00539C]/10 relative">
           <div class="absolute top-4 right-4 bg-white/80 backdrop-blur px-2 py-1 rounded-md text-xs font-bold text-slate-700 shadow-sm">
             IPK {{ tutor.ipk.toFixed(2) }}
@@ -46,7 +50,6 @@
           </div>
         </div>
         
-        <!-- Card Body -->
         <div class="pt-14 p-6 flex flex-col flex-grow">
           <div class="flex justify-between items-start mb-4">
             <div>
@@ -66,7 +69,7 @@
             <div v-for="skill in filterTutorSkills(tutor.skills)" :key="skill.name" class="flex items-center justify-between bg-slate-50 p-2 rounded-lg border border-slate-100">
               <div class="flex items-center gap-2">
                 <i :class="['ph', skill.type === 'Hard Skill' ? 'ph-shield-check text-[#008542]' : 'ph-medal text-[#FDB913]']"></i>
-                <span class="text-sm font-medium text-slate-700">{{ skill.name }}</span>
+                <span class="text-sm font-medium text-slate-700 truncate max-w-[120px]">{{ skill.name }}</span>
               </div>
               <span :class="['text-[10px] px-2 py-0.5 rounded uppercase font-bold', skill.level === 'Advanced' ? 'bg-purple-100 text-purple-700' : skill.level === 'Intermediate' ? 'bg-blue-100 text-blue-700' : 'bg-gray-200 text-gray-700']">
                 {{ skill.level }}
@@ -84,6 +87,15 @@
         </div>
       </div>
     </div>
+    
+    <!-- Empty State Validation -->
+    <div v-else class="text-center py-20 bg-white rounded-3xl border border-slate-100 shadow-sm">
+      <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
+        <i class="ph ph-magnifying-glass text-4xl text-slate-400"></i>
+      </div>
+      <h3 class="text-xl font-bold text-slate-700">Tutor Tidak Ditemukan</h3>
+      <p class="text-slate-500 mt-2">Coba sesuaikan kata kunci atau filter pencarian Anda.</p>
+    </div>
   </div>
 </template>
 
@@ -95,14 +107,25 @@ import { MOCK_TUTORS } from '../stores/dataStore.js';
 const filterType = ref('All');
 const filterOptions = ['All', 'Hard Skill', 'Soft Skill'];
 const searchTerm = ref('');
+const sortBy = ref('rating'); 
 
 const filteredTutors = computed(() => {
-  return MOCK_TUTORS.filter(tutor => {
+  let result = MOCK_TUTORS.filter(tutor => {
     const matchName = tutor.name.toLowerCase().includes(searchTerm.value.toLowerCase());
     const matchSkillSearch = tutor.skills.some(s => s.name.toLowerCase().includes(searchTerm.value.toLowerCase()));
     const matchFilter = filterType.value === 'All' ? true : tutor.skills.some(s => s.type === filterType.value);
     return (matchName || matchSkillSearch) && matchFilter;
   });
+
+  if (sortBy.value === 'rating') {
+    result.sort((a, b) => b.rating - a.rating);
+  } else if (sortBy.value === 'price_asc') {
+    result.sort((a, b) => a.rate - b.rate);
+  } else if (sortBy.value === 'price_desc') {
+    result.sort((a, b) => b.rate - a.rate);
+  }
+
+  return result;
 });
 
 const filterTutorSkills = (skills) => {
