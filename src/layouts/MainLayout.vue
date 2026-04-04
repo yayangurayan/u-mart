@@ -1,6 +1,7 @@
 <template>
-  <div class="min-h-screen bg-slate-50 font-sans text-slate-900 flex flex-col selection:bg-[#008542] selection:text-white">
-    <Header @toggle-menu="isMenuOpen = !isMenuOpen" />
+  <div class="min-h-screen bg-slate-50 font-sans text-slate-900 flex flex-col selection:bg-[#00A651] selection:text-white">
+    <!-- BUG FIXED: Menggunakan AppHeader agar tidak bentrok dengan tag HTML standar <header> -->
+    <AppHeader @toggle-menu="isMenuOpen = !isMenuOpen" />
     
     <!-- Mobile Drawer -->
     <div v-if="isMenuOpen" class="md:hidden fixed inset-0 z-40 bg-black/20 backdrop-blur-sm" @click="isMenuOpen = false">
@@ -9,10 +10,10 @@
           <span class="font-extrabold text-xl">Menu Utama</span>
           <button @click="isMenuOpen = false"><i class="ph ph-x text-xl text-slate-400"></i></button>
         </div>
-        <router-link to="/" @click="isMenuOpen = false" class="text-left font-bold py-3 text-slate-600 hover:text-[#008542]">Beranda</router-link>
-        <router-link to="/profile" @click="isMenuOpen = false" class="text-left font-bold py-3 text-slate-600 hover:text-[#008542]">Profil & Pencapaian</router-link>
-        <router-link to="/shop" @click="isMenuOpen = false" class="text-left font-bold py-3 text-slate-600 hover:text-[#008542]">Cari Tutor (Toko)</router-link>
-        <router-link to="/classroom" @click="isMenuOpen = false" class="text-left font-bold py-3 text-slate-600 hover:text-[#008542]">Class Room</router-link>
+        <router-link to="/" @click="isMenuOpen = false" class="text-left font-bold py-3 text-slate-600 hover:text-[#00A651]">Beranda</router-link>
+        <router-link to="/profile" @click="isMenuOpen = false" class="text-left font-bold py-3 text-slate-600 hover:text-[#00A651]">Profil & Pencapaian</router-link>
+        <router-link to="/shop" @click="isMenuOpen = false" class="text-left font-bold py-3 text-slate-600 hover:text-[#00A651]">Cari Tutor (Toko)</router-link>
+        <router-link to="/classroom" @click="isMenuOpen = false" class="text-left font-bold py-3 text-slate-600 hover:text-[#00A651]">Class Room</router-link>
       </div>
     </div>
 
@@ -26,20 +27,20 @@
       </router-view>
     </main>
 
-    <Footer />
+    <AppFooter />
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import Header from '../components/layout/Header.vue';
-import Footer from '../components/layout/Footer.vue';
+import AppHeader from '../components/layout/Header.vue';
+import AppFooter from '../components/layout/Footer.vue';
 
 const isMenuOpen = ref(false);
 </script>
 
 <style>
-/* Animasi dasar yang aman dan tidak membuat layar blank */
+/* Menggantikan v-motion dengan animasi CSS Murni yang 100% stabil */
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.3s ease, transform 0.3s ease;
 }

@@ -11,17 +11,17 @@
           <input 
             type="text" 
             placeholder="Cari 'Akuntansi', 'VueJS'..."
-            class="w-full pl-12 pr-4 py-3.5 md:py-4 rounded-xl border-none text-slate-900 focus:ring-4 focus:ring-unimed-green/30 transition-shadow outline-none"
+            class="w-full pl-12 pr-4 py-3.5 md:py-4 rounded-xl border-none text-slate-900 focus:ring-4 focus:ring-[#00A651]/30 transition-shadow outline-none font-medium"
             v-model="searchTerm"
           />
         </div>
         
-        <!-- Sorting Lengkap sesuai WDD -->
+        <!-- Sorting Lengkap -->
         <div class="relative">
           <div class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
             <i class="ph ph-sort-ascending text-slate-400"></i>
           </div>
-          <select v-model="sortBy" class="w-full lg:w-auto bg-white text-slate-800 border border-slate-200 pl-10 pr-8 py-3.5 md:py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-unimed-green appearance-none font-medium">
+          <select v-model="sortBy" class="w-full lg:w-auto bg-white text-slate-800 border border-slate-200 pl-10 pr-8 py-3.5 md:py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00A651] appearance-none font-bold">
             <option value="rekomendasi">Rekomendasi</option>
             <option value="distance">Jarak Terdekat (GPS)</option>
             <option value="rating">Rating Tertinggi</option>
@@ -36,7 +36,7 @@
         <button 
           v-for="type in filterOptions" :key="type"
           @click="filterType = type"
-          :class="['px-4 md:px-6 py-2 md:py-2.5 rounded-lg whitespace-nowrap text-sm md:text-base font-medium transition-colors', filterType === type ? 'bg-unimed-yellow text-slate-900' : 'text-white hover:bg-white/20']"
+          :class="['px-4 md:px-6 py-2 md:py-2.5 rounded-lg whitespace-nowrap text-sm md:text-base font-bold transition-colors', filterType === type ? 'bg-[#FDB913] text-slate-900' : 'text-white hover:bg-white/20']"
         >
           {{ type }}
         </button>
@@ -47,11 +47,11 @@
     <div v-if="filteredTutors.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
       <div 
         v-for="tutor in filteredTutors" :key="tutor.id" 
-        class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col h-full"
+        class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-xl hover:border-[#00A651] transition-all duration-300 flex flex-col h-full"
       >
-        <div class="h-24 md:h-28 bg-gradient-to-r from-unimed-green/10 to-unimed-blue/10 relative">
+        <div class="h-24 md:h-28 bg-gradient-to-r from-green-100 to-blue-100 relative">
           <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-2 py-1 rounded-md text-xs font-bold text-slate-700 shadow-sm flex items-center gap-1">
-            <i class="ph-fill ph-map-pin text-unimed-green"></i> {{ tutor.distance }} km
+            <i class="ph-fill ph-map-pin text-[#00A651]"></i> {{ tutor.distance }} km
           </div>
           <div class="absolute -bottom-10 left-4 md:left-6 w-16 h-16 md:w-20 md:h-20 rounded-full border-4 border-white bg-white overflow-hidden shadow-md">
             <img :src="tutor.image" :alt="tutor.name" class="w-full h-full object-cover" />
@@ -62,24 +62,24 @@
           <div class="flex justify-between items-start mb-4">
             <div>
               <h3 class="font-bold text-lg md:text-xl text-slate-800 line-clamp-1">{{ tutor.name }}</h3>
-              <p class="text-xs md:text-sm text-unimed-blue font-medium">{{ tutor.major }}</p>
+              <p class="text-xs md:text-sm text-[#00539C] font-bold">{{ tutor.major }}</p>
             </div>
             <div class="flex flex-col items-end">
-              <div class="flex items-center gap-1 text-unimed-yellow">
+              <div class="flex items-center gap-1 text-[#FDB913]">
                 <i class="ph-fill ph-star"></i>
                 <span class="font-bold text-slate-800">{{ tutor.rating }}</span>
               </div>
-              <span class="text-[10px] md:text-xs text-slate-400">({{ tutor.reviews }} ulasan)</span>
+              <span class="text-[10px] md:text-xs text-slate-400 font-medium">({{ tutor.reviews }} ulasan)</span>
             </div>
           </div>
           
           <div class="space-y-2 mb-6 flex-grow">
             <div v-for="skill in filterTutorSkills(tutor.skills)" :key="skill.name" class="flex items-center justify-between bg-slate-50 p-2 rounded-lg border border-slate-100">
               <div class="flex items-center gap-2">
-                <i :class="['ph', skill.type === 'Hard Skill' ? 'ph-shield-check text-unimed-green' : 'ph-medal text-unimed-yellow']"></i>
-                <span class="text-xs md:text-sm font-medium text-slate-700 truncate max-w-[120px]">{{ skill.name }}</span>
+                <i :class="['ph text-lg', skill.type === 'Hard Skill' ? 'ph-shield-check text-[#00A651]' : 'ph-medal text-[#FDB913]']"></i>
+                <span class="text-xs md:text-sm font-bold text-slate-700 truncate max-w-[120px]">{{ skill.name }}</span>
               </div>
-              <span :class="['text-[9px] md:text-[10px] px-2 py-0.5 rounded uppercase font-bold', skill.level === 'Advanced' ? 'bg-purple-100 text-purple-700' : skill.level === 'Intermediate' ? 'bg-blue-100 text-blue-700' : 'bg-gray-200 text-gray-700']">
+              <span :class="['text-[9px] md:text-[10px] px-2 py-0.5 rounded uppercase font-extrabold', skill.level === 'Advanced' ? 'bg-purple-100 text-purple-700' : skill.level === 'Intermediate' ? 'bg-blue-100 text-blue-700' : 'bg-gray-200 text-gray-700']">
                 {{ skill.level }}
               </span>
             </div>
@@ -87,17 +87,22 @@
 
           <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
             <div>
-              <span class="text-unimed-green font-extrabold text-lg md:text-xl">Rp {{ tutor.rate.toLocaleString('id-ID') }}</span>
-              <span class="text-slate-400 text-xs md:text-sm">/jam</span>
+              <span class="text-[#00A651] font-extrabold text-lg md:text-xl">Rp {{ tutor.rate.toLocaleString('id-ID') }}</span>
+              <span class="text-slate-400 text-xs md:text-sm font-medium">/jam</span>
             </div>
-            <Button variant="outline" @click="$router.push(`/tutor/${tutor.id}`)" customClass="text-sm px-3 py-1.5">Lihat Profil</Button>
+            <div class="flex gap-2">
+              <!-- Fitur Tombol Add to Cart Langsung di Toko -->
+              <Button variant="outline" @click="orderStore.addToCart(tutor)" customClass="px-3 py-1.5" title="Tambah ke Keranjang">
+                <i class="ph ph-shopping-cart text-lg"></i>
+              </Button>
+              <Button variant="primary" @click="$router.push(`/tutor/${tutor.id}`)" customClass="text-sm px-3 py-1.5">Profil</Button>
+            </div>
           </div>
         </div>
       </div>
     </div>
     
-    <!-- Empty State -->
-    <div v-else class="text-center py-20 bg-white rounded-3xl border border-slate-100 shadow-sm mx-4 md:mx-0">
+    <div v-else class="text-center py-20 bg-white rounded-3xl border border-slate-200 shadow-sm mx-4 md:mx-0">
       <div class="w-16 h-16 md:w-20 md:h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
         <i class="ph ph-magnifying-glass text-3xl md:text-4xl text-slate-400"></i>
       </div>
@@ -112,17 +117,18 @@ import { ref, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import Button from '../components/common/Button.vue';
 import { MOCK_TUTORS } from '../stores/dataStore.js';
+import { useOrderStore } from '../stores/orderStore.js';
 
 const route = useRoute();
+const orderStore = useOrderStore();
+
 const filterType = ref('All');
 const filterOptions = ['All', 'Hard Skill', 'Soft Skill'];
 const searchTerm = ref('');
 const sortBy = ref('rekomendasi'); 
 
 onMounted(() => {
-  if (route.query.sort === 'distance') {
-    sortBy.value = 'distance';
-  }
+  if (route.query.sort === 'distance') sortBy.value = 'distance';
 });
 
 const filteredTutors = computed(() => {
@@ -133,33 +139,19 @@ const filteredTutors = computed(() => {
     return (matchName || matchSkillSearch) && matchFilter;
   });
 
-  // Sorting Ekstensif
-  if (sortBy.value === 'rating') {
-    result.sort((a, b) => b.rating - a.rating);
-  } else if (sortBy.value === 'price_asc') {
-    result.sort((a, b) => a.rate - b.rate);
-  } else if (sortBy.value === 'price_desc') {
-    result.sort((a, b) => b.rate - a.rate);
-  } else if (sortBy.value === 'distance') {
-    result.sort((a, b) => a.distance - b.distance); // Lokasi Terdekat
-  } else if (sortBy.value === 'reviews') {
-    result.sort((a, b) => b.reviews - a.reviews); // Pengalaman Terbanyak
-  }
+  if (sortBy.value === 'rating') result.sort((a, b) => b.rating - a.rating);
+  else if (sortBy.value === 'price_asc') result.sort((a, b) => a.rate - b.rate);
+  else if (sortBy.value === 'price_desc') result.sort((a, b) => b.rate - a.rate);
+  else if (sortBy.value === 'distance') result.sort((a, b) => a.distance - b.distance); 
+  else if (sortBy.value === 'reviews') result.sort((a, b) => b.reviews - a.reviews); 
 
   return result;
 });
 
-const filterTutorSkills = (skills) => {
-  return skills.filter(s => filterType.value === 'All' || s.type === filterType.value).slice(0, 3);
-};
+const filterTutorSkills = (skills) => skills.filter(s => filterType.value === 'All' || s.type === filterType.value).slice(0, 3);
 </script>
 
 <style scoped>
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.hide-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 </style>
