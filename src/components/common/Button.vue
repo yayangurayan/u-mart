@@ -1,7 +1,7 @@
 <template>
   <button 
     :class="[
-      'px-4 py-2 rounded-xl font-extrabold transition-all duration-300 flex items-center justify-center gap-2 border border-black/5 active:scale-95', 
+      'px-4 py-2 rounded-xl font-extrabold transition-all duration-300 flex items-center justify-center gap-2 active:scale-95', 
       variantClasses, 
       customClass
     ]"
@@ -22,15 +22,15 @@ const props = defineProps({
 });
 
 const variantClasses = computed(() => {
-  if (props.disabled) return "bg-slate-200 text-slate-400 cursor-not-allowed shadow-none border-transparent";
+  if (props.disabled) return "bg-slate-200 text-slate-400 cursor-not-allowed shadow-none";
   
-  // Kontras ditingkatkan dengan text-white tegas dan shadow kuat agar tidak menyatu dengan background
+  // BUG FIXED: Kontras warna Button outline dan text disesuaikan
   const variants = {
-    primary: "bg-unimed-green text-white hover:bg-unimed-dark shadow-lg shadow-unimed-green/30",
-    secondary: "bg-unimed-yellow text-slate-900 hover:bg-yellow-500 shadow-lg shadow-unimed-yellow/30",
-    tertiary: "bg-unimed-blue text-white hover:bg-blue-800 shadow-lg shadow-unimed-blue/30",
-    outline: "bg-white border-2 border-unimed-green text-unimed-green hover:bg-green-50 shadow-sm",
-    ghost: "bg-transparent text-slate-600 hover:bg-slate-100 shadow-none border-transparent"
+    primary: "bg-unimed-green text-white hover:bg-unimed-dark shadow-md",
+    secondary: "bg-unimed-yellow text-slate-900 hover:bg-yellow-500 shadow-md",
+    tertiary: "bg-unimed-blue text-white hover:bg-blue-800 shadow-md",
+    outline: "bg-transparent border-2 border-unimed-green text-unimed-green hover:bg-unimed-green hover:text-white", // Hover menjadi hijau solid dengan teks putih
+    ghost: "bg-transparent text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
   };
   return variants[props.variant] || variants.primary;
 });

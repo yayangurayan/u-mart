@@ -3,22 +3,22 @@
     <div class="mb-8">
       <h2 class="text-3xl font-extrabold flex items-center gap-3 text-slate-800 dark:text-white">
         <i class="ph-fill ph-gear text-unimed-green"></i> 
-        {{ authStore.language === 'id' ? 'Pengaturan Akun' : 'Account Settings' }}
+        {{ authStore.t('Pengaturan Akun', 'Account Settings') }}
       </h2>
       <p class="text-slate-500 dark:text-slate-400 mt-2 font-medium">
-        {{ authStore.language === 'id' ? 'Sesuaikan preferensi aplikasi dan bahasa sesuai kenyamanan Anda.' : 'Customize app preferences and language to your comfort.' }}
+        {{ authStore.t('Sesuaikan preferensi aplikasi dan bahasa sesuai kenyamanan Anda.', 'Customize app preferences and language to your comfort.') }}
       </p>
     </div>
 
-    <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+    <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden transition-colors duration-300">
       
-      <!-- Toggle Dark Mode -->
+      <!-- Toggle Dark Mode yang Sudah Fix -->
       <div class="p-6 md:p-8 border-b border-slate-100 dark:border-slate-700 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h3 class="font-bold text-lg text-slate-800 dark:text-white flex items-center gap-2">
-            <i class="ph-fill ph-moon text-unimed-blue"></i> Tema Aplikasi (Dark Mode)
+            <i class="ph-fill ph-moon text-unimed-blue"></i> {{ authStore.t('Tema Aplikasi (Dark Mode)', 'App Theme (Dark Mode)') }}
           </h3>
-          <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Ubah tampilan menjadi gelap untuk kenyamanan mata di malam hari.</p>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">{{ authStore.t('Ubah tampilan menjadi gelap untuk kenyamanan mata di malam hari.', 'Change the appearance to dark for eye comfort at night.') }}</p>
         </div>
         <button 
           @click="authStore.toggleTheme()" 
@@ -28,24 +28,24 @@
         </button>
       </div>
 
-      <!-- Toggle Bahasa -->
+      <!-- Toggle Bahasa Global -->
       <div class="p-6 md:p-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h3 class="font-bold text-lg text-slate-800 dark:text-white flex items-center gap-2">
-            <i class="ph-fill ph-translate text-unimed-yellow"></i> Bahasa (Language)
+            <i class="ph-fill ph-translate text-unimed-yellow"></i> {{ authStore.t('Bahasa (Language)', 'Language') }}
           </h3>
-          <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Pilih bahasa yang akan digunakan pada antarmuka aplikasi.</p>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">{{ authStore.t('Pilih bahasa yang akan digunakan pada antarmuka aplikasi.', 'Choose the language to be used in the application interface.') }}</p>
         </div>
         <div class="flex bg-slate-100 dark:bg-slate-700 p-1 rounded-xl">
           <button 
-            @click="authStore.language = 'id'"
-            :class="['px-4 py-2 rounded-lg text-sm font-bold transition-all', authStore.language === 'id' ? 'bg-white dark:bg-slate-600 text-unimed-green shadow-sm' : 'text-slate-500 dark:text-slate-300 hover:text-slate-700']"
+            @click="authStore.setLanguage('id')"
+            :class="['px-4 py-2 rounded-lg text-sm font-bold transition-all', authStore.language === 'id' ? 'bg-white dark:bg-slate-800 text-unimed-green shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200']"
           >
             Indonesia
           </button>
           <button 
-            @click="authStore.language = 'en'"
-            :class="['px-4 py-2 rounded-lg text-sm font-bold transition-all', authStore.language === 'en' ? 'bg-white dark:bg-slate-600 text-unimed-green shadow-sm' : 'text-slate-500 dark:text-slate-300 hover:text-slate-700']"
+            @click="authStore.setLanguage('en')"
+            :class="['px-4 py-2 rounded-lg text-sm font-bold transition-all', authStore.language === 'en' ? 'bg-white dark:bg-slate-800 text-unimed-green shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200']"
           >
             English
           </button>
