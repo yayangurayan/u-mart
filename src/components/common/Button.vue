@@ -6,6 +6,7 @@
       customClass
     ]"
     @click="$emit('click')"
+    :disabled="disabled"
   >
     <slot />
   </button>
@@ -15,22 +16,19 @@
 import { computed } from 'vue';
 
 const props = defineProps({
-  variant: {
-    type: String,
-    default: 'primary'
-  },
-  customClass: {
-    type: String,
-    default: ''
-  }
+  variant: { type: String, default: 'primary' },
+  customClass: { type: String, default: '' },
+  disabled: { type: Boolean, default: false }
 });
 
 const variantClasses = computed(() => {
+  if (props.disabled) return "bg-slate-200 text-slate-400 cursor-not-allowed";
+  
   const variants = {
-    primary: "bg-[#008542] text-white hover:bg-[#006e36] shadow-md hover:shadow-lg",
-    secondary: "bg-[#FDB913] text-slate-900 hover:bg-[#e5a60e] shadow-md",
-    tertiary: "bg-[#00539C] text-white hover:bg-[#00427a] shadow-md",
-    outline: "border-2 border-[#008542] text-[#008542] hover:bg-green-50",
+    primary: "bg-unimed-green text-white hover:bg-unimed-dark shadow-md hover:shadow-lg",
+    secondary: "bg-unimed-yellow text-slate-900 hover:bg-yellow-500 shadow-md",
+    tertiary: "bg-unimed-blue text-white hover:bg-blue-800 shadow-md",
+    outline: "border-2 border-unimed-green text-unimed-green hover:bg-green-50",
     ghost: "text-slate-600 hover:bg-slate-100"
   };
   return variants[props.variant] || variants.primary;
