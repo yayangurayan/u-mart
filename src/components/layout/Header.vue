@@ -3,11 +3,11 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-20">
         <!-- Logo -->
-        <router-link to="/" class="flex items-center gap-3 group">
-          <div class="w-10 h-10 bg-gradient-to-br from-unimed-green to-unimed-dark rounded-xl flex items-center justify-center text-white font-extrabold text-2xl shadow-md group-hover:scale-105 transition-transform">U</div>
-          <span class="font-extrabold text-2xl tracking-tight text-slate-800 dark:text-white">U-Mart<span class="text-unimed-yellow">.</span></span>
+        <router-link to="/" class="flex items-center gap-2">
+          <img src="./logo.png" alt="U-Mart Logo" class="w-10 h-10 rounded-full border border-slate-200 dark:border-slate-700" />
+          <span class="font-bold text-xl text-unimed-green hidden sm:block">U-Mart</span>
         </router-link>
-        
+
         <!-- Navigation Right -->
         <div class="flex items-center gap-2 sm:gap-4">
           <router-link to="/" class="flex items-center gap-2 p-2 sm:px-4 sm:py-2 text-slate-500 dark:text-slate-400 hover:text-unimed-green dark:hover:text-unimed-green hover:bg-green-50 dark:hover:bg-slate-800 rounded-xl transition-colors" active-class="text-unimed-green bg-green-50 dark:bg-slate-800 font-bold" :title="authStore.t('Beranda', 'Home')">
